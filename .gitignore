@@ -1,0 +1,10 @@
+features/
+raw_videos/
+data_manifest.csv
+extraction_failures.csv
+*.npy
+saved_models/
+.venv/
+.venv-1/
+__pycache__/
+*.py[cod]

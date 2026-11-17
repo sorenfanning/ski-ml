@@ -1,0 +1,17 @@
+schema_version: "1.0"
+target_fps: 15
+yolo_model: "yolo11l-pose.pt"
+num_features: 46
+
+feature_indices:
+  normalized_keypoints: [0, 34]   # 17 keypoints * (x, y) centered on hip & scaled by max body radius
+  hip_position: [34, 36]          # Raw normalized (x, y) position in frame
+  hip_velocity: [36, 38]          # Frame-to-frame (vx, vy) trajectory
+  shoulder_angle: 38              # Radians: atan2(right_shoulder_y - left_shoulder_y, dx)
+  hip_angle: 39                   # Radians: atan2(right_hip_y - left_hip_y, dx)
+  shoulder_angular_vel: 40        # Unwrapped d_theta/dt (crucial for 360/720/1080 counting)
+  hip_angular_vel: 41             # Unwrapped d_theta/dt
+  ankle_separation: 42            # Euclidean distance between ankles (rail balance vs jump tuck)
+  ankle_angle: 43                 # Radians: angle between left and right ankle
+  head_hip_vertical_diff: 44      # nose_y - hip_y (negative = upright, positive = inverted/flip)
+  head_hip_horizontal_diff: 45    # nose_x - hip_x (captures looking over shoulder in switch stance)
