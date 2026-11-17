@@ -84,6 +84,7 @@ class SkiTrickPredictor:
         self.model.eval()
 
         # 3. Load YOLO Pose model once so batch predictions are fast
+        # Match the feature extractor's current pretrained pose backbone.
         self.pose_model = YOLO("yolo11l-pose.pt")
         print(f"Loaded '{target}' model from: {model_dir}")
         print(f"Temporal input: {self.temporal_region} ({self.window_fraction:.0%} of clip)")

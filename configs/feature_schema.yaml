@@ -3,6 +3,20 @@ target_fps: 15
 yolo_model: "yolo11l-pose.pt"
 num_features: 46
 
+pose_sidecar:
+  schema_version: "1.0"
+  extractor: "src/extraction/pose_sidecar_extractor.py"
+  yolo_model: "yolo26l-pose.pt"
+  selection: "largest detected person per sampled frame"
+  path: "poses/<clip_id>.npz"
+  contents:
+    - frame_indices
+    - frame_sizes
+    - keypoints_xyn
+    - keypoint_conf
+    - bbox_xywhn
+    - detected
+
 feature_indices:
   normalized_keypoints: [0, 34]   # 17 keypoints * (x, y) centered on hip & scaled by max body radius
   hip_position: [34, 36]          # Raw normalized (x, y) position in frame

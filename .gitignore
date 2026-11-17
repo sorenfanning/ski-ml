@@ -1,4 +1,5 @@
 features/
+poses/
 raw_videos/
 data_manifest.csv
 extraction_failures.csv

@@ -34,6 +34,7 @@ Both Colab and local tools expect this Drive structure:
 ski_ml_shared/
   raw_videos/
   features/
+  poses/
   data_manifest.csv
   extraction_failures.csv
   saved_models/
@@ -66,13 +67,15 @@ Colab commonly includes PyTorch already; install any missing dependencies with:
 
 ## 1. Extract features
 
-Run the extractor in Colab after mounting Drive. It scans `raw_videos/` recursively, samples each decodable video at 15 FPS, and writes one `(frames, 46)` NumPy array per clip.
+Run the feature extractor in Colab after mounting Drive. It scans `raw_videos/` recursively, samples each decodable video at 15 FPS, and writes one `(frames, 46)` NumPy array per clip.
 
 ```python
 sync_dataset()
 ```
 
 Unreadable clips are skipped and documented in `extraction_failures.csv`. Phone videos encoded with unsupported codecs may need conversion to H.264 before extraction.
+
+To generate visualization poses separately, run `sync_pose_sidecars()` from `src/extraction/pose_sidecar_extractor.py`. It creates `poses/<clip_id>.npz` files containing sampled frame indices, normalized YOLO keypoints and confidences, largest-person bounding boxes, and detection flags. It never changes the feature `.npy` files or `data_manifest.csv`.
 
 ## 2. Label clips locally
 
@@ -83,6 +86,7 @@ python tools/label_viewer.py
 ```
 
 The viewer annotates several core fields in one pass and preserves existing labels.
+When a pose sidecar is available, it also renders the sampled YOLO skeleton over the source video.
 
 | Key | Annotation |
 | --- | --- |
